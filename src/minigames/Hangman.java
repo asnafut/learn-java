@@ -4,35 +4,79 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Random;
 
 public class Hangman {
+    /**
+     * @param args
+     */
     public static void main(String[] args) {
         // User selects a word
-        System.out.println("Please select a word");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String word;
-        try {
-            word = reader.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
+        String[] randomWord = { "Fred", "Jane", "Richard Nixon", "Miss America" };
+        Random random = new Random();
+        int wordPosition = random.nextInt(randomWord.length);
+        String word = randomWord[wordPosition];
+        System.out.println(word);
+        int length = word.length();
+        // System.out.println(randomWord[word]);
         // User guesses until no tries left or game won
-        String[] wordAsArray = word.split("");
+        String[] wordAsArrayHidden = word.split("");
+        String arrayAsWord = "";
+        int x = 0;
+        while (x < length) {
+            wordAsArrayHidden[x] = "_";
+            x = x + 1;
+        }
+        x = 0;
         int triesLeft = 5;
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int correctTries = 0;
-        String[] foundCharacters = new String[wordAsArray.length];
+        String[] foundCharacters = new String[wordAsArrayHidden.length];
+        int tries = 0;
+        String triedLetters = "";
         while (triesLeft > 0) {
-            System.out.println("Guess:");
+
+            x = 0;
             String character;
+            System.out.println("Guess:");
+            tries = tries + 1;
+
+            System.out.print(" ");
             try {
                 character = reader.readLine();
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
             }
-            if (Arrays.asList(wordAsArray).contains(character)) {
+
+            String[] wordAsArray = word.split("");
+
+
+            System.out.println("Tried letters: " + triedLetters);
+
+            if (Arrays.asList(wordAsArrayHidden).contains(character)) {
+                System.out.println("you have already found the character " + character);
+            } else if ((word).equals(character)) {
+                System.out.println("Correct! You win! The word was " + word + " you tried " + tries + " times");
+                triesLeft = -1;
+                arrayAsWord = word;
+            }
+
+            else if (Arrays.asList(wordAsArray).contains(character)) {
                 System.out.println("correct");
+
+                while (x < length) {
+                    if (wordAsArray[x].equals(character)) {
+                        wordAsArrayHidden[x] = character;
+                    }
+                    x = x + 1;
+                }
+                x = 0;
+                arrayAsWord = "";
+                while (x < length) {
+                    arrayAsWord = arrayAsWord.concat(wordAsArrayHidden[x]);
+                    x = x + 1;
+                }
                 if (Arrays.asList(foundCharacters).contains(character) == false) {
 
                     foundCharacters[correctTries] = character;
@@ -42,6 +86,11 @@ public class Hangman {
                 System.out.println("incorrect");
                 triesLeft = triesLeft - 1;
                 System.out.println("tries left:" + triesLeft);
+                triedLetters = triedLetters + character;
+            }
+            wordAsArray = word.split("");
+            if (triesLeft > 0) {
+                System.out.println(arrayAsWord);
             }
             boolean isSame = true;
             for (int i = 0; i < wordAsArray.length; i++) {
@@ -49,11 +98,11 @@ public class Hangman {
                     isSame = false;
                 }
             }
-            if (isSame) {
-                System.out.println("You won!");
-                triesLeft = 0;
+            if (isSame && triesLeft > 0) {
+                System.out.println("Correct! You win! The word was " + word + " you tried " + tries + " times");
+                triesLeft = -1;
             }
-            if (triesLeft == 0){
+            if (triesLeft == 0) {
                 System.out.println("no tries left!");
             }
         }
