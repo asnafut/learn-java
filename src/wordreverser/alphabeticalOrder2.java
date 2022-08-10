@@ -48,7 +48,6 @@ public class alphabeticalOrder2 {
             i = i + 1;
         }
 
-
         String arrayAsWord = "";
         x = 0;
         arrayAsWord = "";
