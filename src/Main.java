@@ -25,7 +25,6 @@ public class Main {
     myMethod("Marcel");
     myMethod("John");
 
-    int[][] myImage = { { 1, 2, 3, 4 }, { 5, 6, 7, 2 } };
 
     int result = myMethod(3);
     System.out.println(result);
