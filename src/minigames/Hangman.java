@@ -1,18 +1,30 @@
 package minigames;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Hangman {
     /**
      * @param args
+     * @throws FileNotFoundException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         // User selects a word
-        String[] randomWord = { "Fred", "Jane", "Richard Nixon", "Miss America" };
+        Scanner sc = new Scanner(new File("C:\\dev\\learn-java\\src\\minigames\\HangmanWords.txt"));
+        List<String> lines = new ArrayList<String>();
+        while (sc.hasNextLine()) {
+            lines.add(sc.nextLine());
+        }
+
+        String[] randomWord = lines.toArray(new String[0]);
         Random random = new Random();
         int wordPosition = random.nextInt(randomWord.length);
         String word = randomWord[wordPosition];
@@ -38,7 +50,7 @@ public class Hangman {
 
             x = 0;
             String character;
-            System.out.println("Guess:");
+            System.out.print("Guess:");
             tries = tries + 1;
 
             System.out.print(" ");
@@ -50,7 +62,6 @@ public class Hangman {
             }
 
             String[] wordAsArray = word.split("");
-
 
             System.out.println("Tried letters: " + triedLetters);
 
@@ -86,7 +97,7 @@ public class Hangman {
                 System.out.println("incorrect");
                 triesLeft = triesLeft - 1;
                 System.out.println("tries left:" + triesLeft);
-                triedLetters = triedLetters + character;
+                triedLetters = triedLetters + character + ", ";
             }
             wordAsArray = word.split("");
             if (triesLeft > 0) {
@@ -96,6 +107,7 @@ public class Hangman {
             for (int i = 0; i < wordAsArray.length; i++) {
                 if (Arrays.asList(foundCharacters).contains(wordAsArray[i]) == false) {
                     isSame = false;
+
                 }
             }
             if (isSame && triesLeft > 0) {
@@ -105,6 +117,12 @@ public class Hangman {
             if (triesLeft == 0) {
                 System.out.println("no tries left!");
             }
+        }
+    }
+
+    {
+        {
+
         }
     }
 }
