@@ -21,7 +21,6 @@ public class alphabeticalOrder {
 
         String[] wordAsArray = word.split("");
         int x = 0;
-        String wordHidden;
 
         String[] wordAsArrayHidden = word.split("");
 
