@@ -60,6 +60,7 @@ public class alphabeticalOrderList {
             x = x + 1;
         }
         System.out.println(arrayAsWord);
+        System.out.println(wordAsArrayHidden[0]);
 
     }
 }
