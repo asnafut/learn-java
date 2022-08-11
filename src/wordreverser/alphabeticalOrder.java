@@ -237,6 +237,14 @@ public class alphabeticalOrder {
             x = x + 1;
         }
 
+        /*if wordasarray(x)equals(alphabetArray(y);
+            if(wordsasarray.length < x)
+            y=0;
+            x+1;
+                if wordsasarray(x).equals(alphabetarray(y))
+        y+=1;)
+        x+=1; */
+
         String arrayAsWord = "";
         x = 0;
         arrayAsWord = "";
